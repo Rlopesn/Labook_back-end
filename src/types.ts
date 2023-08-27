@@ -23,3 +23,9 @@ export interface PostUserDB extends PostDB {
     userId: string,
     userName: string
 }
+
+export interface LikeDislikeDB {
+    post_id: string,
+    user_id: string,
+    like: number
+}

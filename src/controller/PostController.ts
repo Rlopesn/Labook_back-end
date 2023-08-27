@@ -1,7 +1,6 @@
 import { Request, Response } from 'express'
 import { PostBusiness } from '../business/PostBusiness'
 import { BaseError } from '../errors/BaseError'
-import { BadRequestError } from '../errors/BadRequestError'
 import { postUpdateSchema } from '../dtos/postUpdate.dto'
 import { ZodError } from 'zod'
 import { postCreateSchema } from '../dtos/postCreate.dto'
@@ -31,7 +30,7 @@ export class PostController {
             } else if (error instanceof BaseError) {
                 res.status(error.statusCode).send(error.message)
             } else {
-                res.status(500).send("Erro inesperado")
+                res.status(500).send("unexpected error.")
             }
         }
     }
@@ -52,7 +51,7 @@ export class PostController {
             } else if (error instanceof BaseError) {
                 res.status(error.statusCode).send(error.message)
             } else {
-                res.status(500).send("Erro inesperado")
+                res.status(500).send("unexpected error.")
             }
         }
     }
@@ -77,7 +76,7 @@ export class PostController {
             } else if (error instanceof BaseError) {
                 res.status(error.statusCode).send(error.message)
             } else {
-                res.status(500).send("Erro inesperado")
+                res.status(500).send("unexpected error.")
             }
         }
     }
@@ -91,7 +90,7 @@ export class PostController {
 
             await this.postBusiness.delete(input)
 
-            res.status(200).send({ message: "Post deletado." })
+            res.status(200).send({ message: "Post deleted." })
 
         } catch (error) {
             console.log(error);
@@ -101,7 +100,7 @@ export class PostController {
             } else if (error instanceof BaseError) {
                 res.status(error.statusCode).send(error.message)
             } else {
-                res.status(500).send("Erro inesperado")
+                res.status(500).send("unexpected error.")
             }
         }
     }
@@ -125,7 +124,7 @@ export class PostController {
             } else if (error instanceof BaseError) {
                 res.status(error.statusCode).send(error.message)
             } else {
-                res.status(500).send("Erro inesperado")
+                res.status(500).send("unexpected error.")
             }
         }
         

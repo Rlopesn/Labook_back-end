@@ -28,7 +28,7 @@ export class PostBusiness {
         const result = this.tokenManager.getPayload(token)
 
         if (!result) {
-            throw new Error("token invalido.")
+            throw new Error("invalid token.")
         }
 
         const postCreateDB: PostDB = {
@@ -51,7 +51,7 @@ export class PostBusiness {
         const payload = this.tokenManager.getPayload(token)
 
         if (payload === null) {
-            throw new BadRequestError("token invalido.")
+            throw new BadRequestError("invalid token.")
         }
 
         const result = await this.postDatabase.findPost()
@@ -82,17 +82,17 @@ export class PostBusiness {
 
         const payload = this.tokenManager.getPayload(token)
         if (payload === null) {
-            throw new BadRequestError("token invalido.")
+            throw new BadRequestError("invalid token.")
         }
         const postDB = await this.postDatabase.findPostById(id)
 
         if (!postDB) {
-            throw new BadRequestError("id invalido.")
+            throw new BadRequestError("invalid id.")
         }
 
 
         if (payload.id !== postDB.creator_id) {
-            throw new BadRequestError("id incorreto.")
+            throw new BadRequestError("incorrect id.")
         }
 
         await this.postDatabase.updatePost(id, content)
@@ -104,19 +104,19 @@ export class PostBusiness {
 
         const payload = this.tokenManager.getPayload(token)
         if (payload === null) {
-            throw new BadRequestError("token invalido.")
+            throw new BadRequestError("invalid token.")
         }
 
         const result = await this.postDatabase.findPostById(id)
 
         if (!result) {
-            throw new BadRequestError("'Id' não encontrado.")
+            throw new BadRequestError("'Id' not found.")
         }
 
         if (payload.id === result.creator_id || payload.role === USER_ROLES.ADMIN) {
             await this.postDatabase.delete(id)
         }else{
-            throw new BadRequestError("acesso negado")
+            throw new BadRequestError("access denied")
         }
 
     }
@@ -129,18 +129,18 @@ export class PostBusiness {
         const payload = this.tokenManager.getPayload(token)
         
         if (payload === null) {
-            throw new BadRequestError("token invalido.")
+            throw new BadRequestError("invalid token.")
         }
         const userId = payload.id
 
         const result = await this.postDatabase.findPostById(postId)
 
         if(typeof result === 'undefined'){
-            throw new BadRequestError("Post não localizado.")
+            throw new BadRequestError("Post not found.")
         }
         
         if(userId === result?.creator_id){
-            throw new BadRequestError("você não pode cutir seu proprio post.")
+            throw new BadRequestError("you cannot like your own post.")
         }
     
         const likeDislikeDB: LikeDislikeDB = {
@@ -167,7 +167,7 @@ export class PostBusiness {
                     await this.postDatabase.revertLikeToDislike(postId)
                 }
             }else{
-                await this.postDatabase.deleteLikeDislike(postId, userId)// se clicar duas vezes deleta
+                await this.postDatabase.deleteLikeDislike(postId, userId)
 
                 if(isLiked === 1){
                     await this.postDatabase.decrementLike(postId)
