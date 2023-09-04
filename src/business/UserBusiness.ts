@@ -53,7 +53,7 @@ export class UserBusiness {
         const token = this.tokenManager.createToken(tokenPayload)
 
         const output: userCreateOutputDTO = {
-            message: "CREATED",
+            message: "created",
             token: token
         }
         return output
@@ -81,13 +81,13 @@ export class UserBusiness {
         const user = await this.userDatabase.findUserByEmail(email)
 
         if (!user) {
-            throw new ConflictError("Email de usuário não encontrado.")
+            throw new ConflictError("User email not found.")
         }
 
         const isPasswordValid = await this.hashManager.compare(password, user.password)
 
         if (!isPasswordValid) {
-            throw new ConflictError("Senha incorreta.")
+            throw new ConflictError("incorrect password.")
         }
 
         const tokenPayload: TokenPayload = {

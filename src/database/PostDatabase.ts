@@ -1,4 +1,3 @@
-import { User } from "../models/User";
 import { LikeDislikeDB, PostDB, PostUserDB } from "../types";
 import { BaseDatabase } from "./BaseDatabase";
 
@@ -58,8 +57,6 @@ export class PostDatabase extends BaseDatabase {
         await BaseDatabase.connection(PostDatabase.TABLE_POST).del().where({id})
     }
 
-    //Like e Dislike
-
     public async findLikeDislike(postId: string, userId: string): Promise<LikeDislikeDB>{
        const [result]: LikeDislikeDB[]=  await BaseDatabase.connection("likes_dislikes")
        .where({post_id: postId})
@@ -116,6 +113,4 @@ export class PostDatabase extends BaseDatabase {
         .increment('likes')
         .decrement('dislikes')
     }
-
-
 }

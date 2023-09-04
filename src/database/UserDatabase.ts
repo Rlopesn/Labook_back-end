@@ -6,11 +6,9 @@ export class UserDatabase extends BaseDatabase {
 
     public async findUserById(id: string): Promise<UserDB|undefined> {
         const [result] = await BaseDatabase.connection(UserDatabase.TABLE_USERS).where({ id })
-
         if (!result) {
             return undefined
         }
-
         const user: UserDB = {
             id: result.id,
             name: result.name,
@@ -19,7 +17,6 @@ export class UserDatabase extends BaseDatabase {
             role: result.role,
             created_at: result.created_at
         }
-
         return user
     }
 
